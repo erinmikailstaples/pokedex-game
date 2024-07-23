@@ -23,21 +23,31 @@ const Pokedex: React.FC = () => {
   const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
+    console.log('Initializing LaunchDarkly...');
     const initLaunchDarkly = async () => {
-      const sdkKey = process.env.NEXT_PUBLIC_LD_CLIENT_SIDE_SDK;
+      const sdkKey = process.env.LD_CLIENT_SIDE_SDK;
       console.log('LaunchDarkly Client ID:', sdkKey);
       if (sdkKey) {
-        const client = initialize(sdkKey, { kind: 'user', key: 'user-key-123abc' });
-        await client.waitForInitialization();
-        setLdClient(client);
-        setIsQuizMode(client.variation('quiz-mode', false));
+        try {
+          const client = initialize(sdkKey, { kind: 'user', key: 'user-key-123abc' });
+          console.log('LaunchDarkly client initialized');
+          await client.waitForInitialization();
+          console.log('LaunchDarkly client ready');
+          setLdClient(client);
+          const quizMode = client.variation('quiz-mode', false);
+          console.log('Quiz mode:', quizMode);
+          setIsQuizMode(quizMode);
+        } catch (error) {
+          console.error('Error initializing LaunchDarkly:', error);
+        }
       } else {
         console.error('LaunchDarkly Client ID is not set');
       }
     };
-
+  
     initLaunchDarkly();
   }, []);
+  
 
   useEffect(() => {
     fetchNewPokemon();
