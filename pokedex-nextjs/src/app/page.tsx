@@ -5,3 +5,10 @@ const ClientPokedex = dynamic(() => import('./components/ClientPokedex'), {
   ssr: false,
 });
 
+export default function Home() {
+  return (
+    <main className={styles.main}>
+      <ClientPokedex />
+    </main>
+  );
+}

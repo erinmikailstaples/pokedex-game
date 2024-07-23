@@ -1,4 +1,3 @@
-// app/components/ClientPokedex.tsx
 'use client';
 
 import PokemonDisplay from '../PokemonDisplay';
