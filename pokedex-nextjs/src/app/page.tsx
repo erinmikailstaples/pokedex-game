@@ -2,10 +2,10 @@
 'use client';
 
 import styles from './Pokedex.module.scss';
-import PokemonDisplay from '../components/PokemonDisplay';
-import QuizMode from '../components/QuizMode';
-import RandomMode from '../components/RandomMode';
-import { usePokemonData } from '../hooks/usePokemonData';
+import PokemonDisplay from './components/PokemonDisplay';
+import QuizMode from './components/QuizMode';
+import RandomMode from './components/RandomMode';
+import { usePokemonData } from './hooks/usePokemonData';
 
 export default function Home() {
   const {
