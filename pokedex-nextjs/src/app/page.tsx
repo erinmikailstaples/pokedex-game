@@ -1,6 +1,3 @@
-// Use client directive to mark this file for client-side execution
-use client;
-
 // Import necessary hooks and components
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
@@ -10,6 +7,7 @@ function Home() {
   const [pokemon, setPokemon] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
   useEffect(() => {
     const fetchPokemon = async () => {
       try {
@@ -25,11 +23,13 @@ function Home() {
     };
     fetchPokemon();
   }, []);
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
+
   return (
-    <div id={styles.forest}>
-      <div id={styles.pokedex}>
+    <div id="forest"> {/* Assuming 'forest' is an ID, use it directly */}
+      <div className={styles.pokedex}>
         <div className={styles.sensor}>
           <button></button>
         </div>
@@ -61,6 +61,7 @@ function Home() {
         <div className={styles.bottomActions}>
           {/* Bottom Actions and Input Pad remain unchanged */}
         </div>
+      </div>
     </div>
   );
 }
