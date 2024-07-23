@@ -3,7 +3,8 @@
 import PokemonDisplay from '../PokemonDisplay';
 import QuizMode from '../QuizMode';
 import RandomMode from '../RandomMode';
-import { usePokemonData } from '../../hooks/usePokemonData';
+import { usePokemonData } from '@/app/hooks/usePokemonData';
+
 
 export default function ClientPokedex() {
   const {

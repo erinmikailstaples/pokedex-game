@@ -1,4 +1,3 @@
-// src/app/hooks/usePokemonData.ts
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -23,7 +22,12 @@ export function usePokemonData() {
 
   useEffect(() => {
     const initLaunchDarkly = async () => {
-      const client = initialize(process.env.NEXT_PUBLIC_LD_CLIENT_SIDE_SDK!, { anonymous: true });
+      const clientSideId = process.env.NEXT_PUBLIC_LD_CLIENT_SIDE_SDK;
+      if (!clientSideId) {
+        console.error('LaunchDarkly client-side ID is not set');
+        return;
+      }
+      const client = initialize(clientSideId, { anonymous: true });
       await client.waitForInitialization();
       setLdClient(client);
       setIsQuizMode(client.variation('quiz-mode', false));
