@@ -1,4 +1,4 @@
-// creates quiz mode components/QuizMode.tsx
+// src/app/components/QuizMode/index.tsx
 
 import styles from '../PokemonDisplay.module.scss';
 
@@ -10,7 +10,14 @@ interface QuizModeProps {
   onReset: () => void;
 }
 
+const QUIZ_TYPES = ['fire', 'water', 'grass'];
+
 export default function QuizMode({ score, attempts, gameOver, onGuess, onReset }: QuizModeProps) {
+  const handleGuess = (type: string) => {
+    onGuess(type);
+    // The score update is now handled in the parent component (usePokemonData hook)
+  };
+
   return (
     <div className={styles.quizMode}>
       <h2>Guess the Pokemon Type!</h2>
@@ -25,9 +32,11 @@ export default function QuizMode({ score, attempts, gameOver, onGuess, onReset }
         </div>
       ) : (
         <div className={styles.typeButtons}>
-          <button onClick={() => onGuess('fire')}>Fire</button>
-          <button onClick={() => onGuess('water')}>Water</button>
-          <button onClick={() => onGuess('grass')}>Grass</button>
+          {QUIZ_TYPES.map((type) => (
+            <button key={type} onClick={() => handleGuess(type)}>
+              {type.charAt(0).toUpperCase() + type.slice(1)}
+            </button>
+          ))}
         </div>
       )}
     </div>
