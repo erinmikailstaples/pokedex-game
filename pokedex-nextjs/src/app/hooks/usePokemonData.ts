@@ -1,8 +1,15 @@
-// hooks/usePokemonData.ts
+// src/app/hooks/usePokemonData.ts
 'use client';
 
 import { useState, useEffect } from 'react';
 import { initialize, LDClient } from 'launchdarkly-js-client-sdk';
+
+interface PokemonData {
+  name: string;
+  id: number;
+  types: { type: { name: string } }[];
+  sprites: { front_default: string };
+}
 
 export function usePokemonData() {
   const [pokemon, setPokemon] = useState<PokemonData | null>(null);
