@@ -25,7 +25,7 @@ const Pokedex: React.FC = () => {
   useEffect(() => {
     console.log('Initializing LaunchDarkly...');
     const initLaunchDarkly = async () => {
-      const sdkKey = process.env.LD_CLIENT_SIDE_SDK;
+      const sdkKey = process.env.NEXT_PUBLIC_LD_CLIENT_SIDE_SDK;
       console.log('LaunchDarkly Client ID:', sdkKey);
       if (sdkKey) {
         try {
