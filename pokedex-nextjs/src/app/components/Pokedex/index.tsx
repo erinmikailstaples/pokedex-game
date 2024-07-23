@@ -1,4 +1,4 @@
-import styles from './Pokedex.module.scss'
+import styles from '../PokemonDisplay.module.scss'
 
 export default function Pokedex() {
   return (

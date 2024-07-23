@@ -1,6 +1,6 @@
 // creates display image - components/PokemonDisplay.tsx
 import Image from 'next/image';
-import styles from 'pokedex-nextjs/src/app/components/Pokedex.module.scss';
+import styles from '../PokemonDisplay.module.scss';
 
 interface PokemonDisplayProps {
   imageUrl: string;

@@ -1,5 +1,5 @@
 // random pokemon display - components/RandomMode.tsx
-import styles from './RandomMode.module.scss';
+import styles from '../PokemonDisplay.module.scss';
 
 interface RandomModeProps {
   name: string;

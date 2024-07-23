@@ -1,6 +1,6 @@
 // creates quiz mode components/QuizMode.tsx
 
-import styles from './QuizMode.module.scss';
+import styles from '../PokemonDisplay.module.scss';
 
 interface QuizModeProps {
   score: number;
