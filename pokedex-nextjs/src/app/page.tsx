@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // Import necessary hooks and components
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
@@ -17,7 +16,7 @@ function Home() {
         const data = await response.json();
         setPokemon(data);
       } catch (err) {
-        setError(err.message);
+        setError(error.message);
       } finally {
         setLoading(false);
       }
@@ -28,12 +27,6 @@ function Home() {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
-=======
-import Image from "next/image";
-import styles from './Pokedex.module.scss';
-
-export default function Home() {
->>>>>>> parent of fea1a14 (update the main page)
   return (
     <div id="forest"> {/* Assuming 'forest' is an ID, use it directly */}
       <div className={styles.pokedex}>
