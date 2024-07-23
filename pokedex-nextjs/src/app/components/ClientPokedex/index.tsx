@@ -2,9 +2,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import PokemonDisplay from './PokemonDisplay';
-import QuizMode from './QuizMode';
-import RandomMode from './RandomMode';
+import PokemonDisplay from '../PokemonDisplay';
+import QuizMode from '../QuizMode';
+import RandomMode from '../RandomMode';
 import { usePokemonData } from '../hooks/usePokemonData';
 
 export default function ClientPokedex() {
