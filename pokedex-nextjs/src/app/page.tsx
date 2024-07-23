@@ -24,11 +24,16 @@ const Pokedex: React.FC = () => {
 
   useEffect(() => {
     const initLaunchDarkly = async () => {
-      console.log('LaunchDarkly Client ID:', process.env.LD_CLIENT_SIDE_SDK);
-      const client = initialize(process.env.LD_CLIENT_SIDE_SDK!, { anonymous: true });
-      await client.waitForInitialization();
-      setLdClient(client);
-      setIsQuizMode(client.variation('quiz-mode', false));
+      const sdkKey = process.env.NEXT_PUBLIC_LD_CLIENT_SIDE_SDK;
+      console.log('LaunchDarkly Client ID:', sdkKey);
+      if (sdkKey) {
+        const client = initialize(sdkKey, { kind: 'user', key: 'user-key-123abc' });
+        await client.waitForInitialization();
+        setLdClient(client);
+        setIsQuizMode(client.variation('quiz-mode', false));
+      } else {
+        console.error('LaunchDarkly Client ID is not set');
+      }
     };
 
     initLaunchDarkly();
@@ -37,8 +42,6 @@ const Pokedex: React.FC = () => {
   useEffect(() => {
     fetchNewPokemon();
   }, [isQuizMode]);
-
-  // Call the PokeAPI to get grass, fire, or water type only
 
   const fetchNewPokemon = async () => {
     const types = ['fire', 'water', 'grass'];
@@ -64,7 +67,6 @@ const Pokedex: React.FC = () => {
       setIsLoading(false);
     }
   };
-  
 
   const handleTypeGuess = (guessedType: string) => {
     if (!pokemon || gameOver) return;
