@@ -23,14 +23,24 @@ export function usePokemonData() {
   useEffect(() => {
     const initLaunchDarkly = async () => {
       const clientSideId = process.env.NEXT_PUBLIC_LD_CLIENT_SIDE_SDK;
+      console.log('LaunchDarkly Client Side ID:', clientSideId);
       if (!clientSideId) {
         console.error('LaunchDarkly client-side ID is not set');
         return;
       }
-      const client = initialize(clientSideId, { anonymous: true });
-      await client.waitForInitialization();
-      setLdClient(client);
-      setIsQuizMode(client.variation('quiz-mode', false));
+      try {
+        const client = initialize(clientSideId, { anonymous: true });
+        await client.waitForInitialization();
+        console.log('LaunchDarkly client initialized successfully');
+        setLdClient(client);
+        const quizModeValue = client.variation('quiz-mode', false);
+        console.log('Quiz mode value:', quizModeValue);
+        setIsQuizMode(quizModeValue);
+      } catch (error) {
+        console.error('Error initializing LaunchDarkly:', error);
+        // Set a default value for isQuizMode if LaunchDarkly fails
+        setIsQuizMode(false);
+      }
     };
 
     initLaunchDarkly();
