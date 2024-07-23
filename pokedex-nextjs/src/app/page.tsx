@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Import necessary hooks and components
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
@@ -27,6 +28,12 @@ function Home() {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
+=======
+import Image from "next/image";
+import styles from './Pokedex.module.scss';
+
+export default function Home() {
+>>>>>>> parent of fea1a14 (update the main page)
   return (
     <div id="forest"> {/* Assuming 'forest' is an ID, use it directly */}
       <div className={styles.pokedex}>
@@ -34,36 +41,48 @@ function Home() {
           <button></button>
         </div>
         <div className={styles.cameraDisplay}>
-          {pokemon && (
-            <Image src={pokemon.sprites.front_default} alt={pokemon.name} width={300} height={300} />
-          )}
+          <Image src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png" alt="Pokemon" width={300} height={300} />
         </div>
         <div className={styles.divider}></div>
         <div className={styles.statsDisplay}>
-          {pokemon && (
-            <>
-              <h2>{pokemon.name}</h2>
-              <h3>Abilities</h3>
-              <ul>
-                {pokemon.abilities.map((ability) => (
-                  <li key={ability.ability.name}>{ability.ability.name}</li>
-                ))}
-              </ul>
-              <h3>Moves</h3>
-              <ul>
-                {pokemon.moves.slice(0, 3).map((move) => (
-                  <li key={move.move.name}>{move.move.name}</li>
-                ))}
-              </ul>
-            </>
-          )}
+          <h2>Charmander</h2>
+          <h3>Abilities</h3>
+          <ul>
+            <li>Solar-power</li>
+            <li>Blaze</li>
+          </ul>
+          <h3>Moves</h3>
+          <ul>
+            <li>dragon-rage</li>
+            <li>dragon-breath</li>
+            <li>dragon-claw</li>
+          </ul>
         </div>
-        <div className={styles.bottomActions}>
-          {/* Bottom Actions and Input Pad remain unchanged */}
+        <div className={styles.botomActions}>
+          <div id={styles.actions}>
+            <button className={styles.a}></button>
+          </div>
+          <div id={styles.cross}>
+            <button className={`${styles.crossButton} ${styles.up}`}></button>
+            <button className={`${styles.crossButton} ${styles.right}`}></button>
+            <button className={`${styles.crossButton} ${styles.down}`}></button>
+            <button className={`${styles.crossButton} ${styles.left}`}></button>
+            <div className={`${styles.crossButton} ${styles.center}`}> </div>
+          </div>
         </div>
+<<<<<<< HEAD
+=======
+        <div className={styles.inputPad}><input /></div>
+        <div className={styles.bottomModes}>
+          <button className={styles.levelButton}></button>
+          <button className={styles.levelButton}></button>
+          <button className={styles.levelButton}></button>
+          <button className={styles.levelButton}></button>
+          <button className={`${styles.pokedexMode} ${styles.blackButton}`}>Pokedex</button>
+          <button className={`${styles.gameMode} ${styles.blackButton}`}>Game</button>
+        </div>
+>>>>>>> parent of fea1a14 (update the main page)
       </div>
     </div>
   );
 }
-
-export default Home;
