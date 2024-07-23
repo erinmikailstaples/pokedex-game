@@ -8,10 +8,8 @@ import { initialize, LDClient } from 'launchdarkly-js-client-sdk';
 interface PokemonData {
   name: string;
   id: number;
-  abilities: { ability: { name: string } }[];
-  moves: { move: { name: string } }[];
-  sprites: { front_default: string };
   types: { type: { name: string } }[];
+  sprites: { front_default: string };
 }
 
 const Pokedex: React.FC = () => {
@@ -19,50 +17,75 @@ const Pokedex: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [ldClient, setLdClient] = useState<LDClient | null>(null);
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [isQuizMode, setIsQuizMode] = useState(false);
+  const [score, setScore] = useState(0);
+  const [attempts, setAttempts] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
     const initLaunchDarkly = async () => {
-      const client = initialize('YOUR_CLIENT_SIDE_ID', { anonymous: true });
+      console.log('LaunchDarkly Client ID:', process.env.LD_CLIENT_SIDE_SDK);
+      const client = initialize(process.env.LD_CLIENT_SIDE_SDK!, { anonymous: true });
       await client.waitForInitialization();
       setLdClient(client);
+      setIsQuizMode(client.variation('quiz-mode', false));
     };
 
     initLaunchDarkly();
   }, []);
 
   useEffect(() => {
-    const fetchPokemon = async () => {
-      try {
-        setIsLoading(true);
+    fetchNewPokemon();
+  }, [isQuizMode]);
+
+  // Call the PokeAPI to get grass, fire, or water type only
+
+  const fetchNewPokemon = async () => {
+    const types = ['fire', 'water', 'grass'];
+    try {
+      setIsLoading(true);
+      let validPokemon = null;
+      while (!validPokemon) {
         const randomId = Math.floor(Math.random() * 898) + 1;
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data: PokemonData = await response.json();
-        if (selectedType && !data.types.some(t => t.type.name === selectedType)) {
-          throw new Error('Pokemon type does not match selected type');
+        if (data.types.some(type => types.includes(type.type.name))) {
+          validPokemon = data;
         }
-        setPokemon(data);
-      } catch (e) {
-        console.error('Error fetching Pokemon:', e);
-        setError('Failed to fetch Pokemon. Please try again.');
-      } finally {
-        setIsLoading(false);
       }
-    };
+      setPokemon(validPokemon);
+    } catch (e) {
+      console.error('Error fetching Pokemon:', e);
+      setError('Failed to fetch Pokemon. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
 
-    fetchPokemon();
-  }, [selectedType]);
+  const handleTypeGuess = (guessedType: string) => {
+    if (!pokemon || gameOver) return;
 
-  const handleTypeSelect = (type: string) => {
-    if (ldClient) {
-      const showType = ldClient.variation('show-pokemon-type', false);
-      if (showType) {
-        setSelectedType(type);
+    const correctType = pokemon.types[0].type.name;
+    if (guessedType === correctType) {
+      setScore(score + 1);
+      fetchNewPokemon();
+    } else {
+      setAttempts(attempts + 1);
+      if (attempts >= 2) {
+        setGameOver(true);
       }
     }
+  };
+
+  const resetGame = () => {
+    setScore(0);
+    setAttempts(0);
+    setGameOver(false);
+    fetchNewPokemon();
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -74,38 +97,46 @@ const Pokedex: React.FC = () => {
       <div className={styles.cameraDisplay}>
         <Image
           src={pokemon.sprites.front_default}
-          alt={pokemon.name}
+          alt={isQuizMode ? "Mystery Pokemon" : pokemon.name}
           width={300}
           height={300}
           unoptimized={true}
         />
       </div>
-      <h2 className={styles.pokemonName}>{pokemon.name}</h2>
-      <div className={styles.statsDisplay}>
-        <h3>Type</h3>
-        <ul>
-          {pokemon.types.map((type, index) => (
-            <li key={index}>{type.type.name}</li>
-          ))}
-        </ul>
-        <h3>Abilities</h3>
-        <ul>
-          {pokemon.abilities.slice(0, 2).map((ability, index) => (
-            <li key={index}>{ability.ability.name}</li>
-          ))}
-        </ul>
-        <h3>Moves</h3>
-        <ul>
-          {pokemon.moves.slice(0, 3).map((move, index) => (
-            <li key={index}>{move.move.name}</li>
-          ))}
-        </ul>
-      </div>
-      <div className={styles.typeButtons}>
-        <button onClick={() => handleTypeSelect('fire')}>Fire</button>
-        <button onClick={() => handleTypeSelect('water')}>Water</button>
-        <button onClick={() => handleTypeSelect('grass')}>Grass</button>
-      </div>
+      {isQuizMode ? (
+        <div className={styles.quizMode}>
+          <h2>Guess the Pokemon Type!</h2>
+          <div className={styles.scoreBoard}>
+            <p>Score: {score}</p>
+            <p>Attempts left: {3 - attempts}</p>
+          </div>
+          {gameOver ? (
+            <div>
+              <p>Game Over! Your final score: {score}</p>
+              <button onClick={resetGame}>Play Again</button>
+            </div>
+          ) : (
+            <div className={styles.typeButtons}>
+              <button onClick={() => handleTypeGuess('fire')}>Fire</button>
+              <button onClick={() => handleTypeGuess('water')}>Water</button>
+              <button onClick={() => handleTypeGuess('grass')}>Grass</button>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className={styles.randomMode}>
+          <h2 className={styles.pokemonName}>{pokemon.name}</h2>
+          <div className={styles.statsDisplay}>
+            <h3>Type</h3>
+            <ul>
+              {pokemon.types.map((type, index) => (
+                <li key={index}>{type.type.name}</li>
+              ))}
+            </ul>
+          </div>
+          <button onClick={fetchNewPokemon}>Get New Pokemon</button>
+        </div>
+      )}
     </div>
   );
 };
