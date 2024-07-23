@@ -1,199 +1,88 @@
-.forest {
+.main {
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   background: url('https://wallpapertag.com/wallpaper/middle/6/2/2/572651-pokemon-forest-background-1920x1200-samsung.jpg');
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
 .pokedex {
-  width: 800px;
-  height: 600px;
-  margin: auto;
+  width: 100%;
+  max-width: 800px;
   background-color: #dd0b2d;
   border: #88061c 10px solid;
   border-top-width: 20px;
-  z-index: 2;
-  display: grid;
-  grid-template-columns: 5% 40% 10% 40% 5%;
-  grid-template-rows: 3% 12% 40% 20% 20% 5%;
-  border-radius: 2%;
-  font-family: 'Press Start 2P';
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Press Start 2P', cursive;
 }
 
 .cameraDisplay {
   background-color: #E5F6FC;
   border-radius: 5%;
-  border: 30px solid #E6E6E6;
-  grid-column-start: 2;
-  grid-row-start: 3;
-  grid-row-end: 5;
+  border: 15px solid #E6E6E6;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 
   img {
     width: 100%;
     height: auto;
+    max-width: 300px;
   }
 }
 
-.divider {
-  background-color: #88061c;
-  grid-column-start: 3;
-  grid-row-start: 1;
-  grid-row-end: 7;
-  margin: 0 30px;
+.pokemonName {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #fff;
+  text-transform: capitalize;
 }
 
 .statsDisplay {
   background-color: #9fdab1;
-  border-radius: 0%;
   border: 5px solid #E6E6E6;
-  grid-column-start: 4;
-  grid-row-start: 3;
   padding: 15px;
-  overflow: scroll;
+  overflow-y: auto;
+  max-height: 300px;
 
-  h2 {
+  h3 {
     margin: 10px 0;
   }
 
   ul {
-    margin: 10px;
-    overflow: auto;
+    margin: 10px 0;
+    padding-left: 20px;
+
+    li {
+      margin-bottom: 5px;
+    }
   }
 }
 
-.sensor {
-  grid-column-start: 2;
-  grid-row-start: 2;
-
-  button {
-    cursor: pointer;
-    background: #71CDF4;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: block;
-    margin: auto;
-    z-index: 3;
-    float: left;
-    margin-left: 25px;
-    border: 3px solid white;
-  }
-}
-
-.bottomActions {
-  grid-column-start: 2;
-  grid-row-start: 5;
-  display: grid;
-  grid-template-columns: 25% 25% 15% 35%;
-  grid-template-rows: 10% 80% 10%;
-}
-
-#actions {
-  grid-column-start: 1;
-  grid-row-start: 2;
-  grid-row-end: 5;
-
-  .a {
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    background-color: #404040;
-    border: 5px solid #303030;
-    cursor: pointer;
-  }
-}
-
-.cross {
-  grid-column-start: 4;
-  grid-row-start: 2;
-  grid-row-end: 5;
-  display: grid;
-  grid-template-columns: 33.33% 33.33% 33.33%;
-  grid-template-rows: 33.33% 33.33% 33.33%;
-
-  .crossButton {
-    background-color: #404040;
-    border: #303030;
-    color: red;
-    cursor: pointer;
-    border-style: solid;
+@media (max-width: 600px) {
+  .pokedex {
+    border-width: 5px;
+    border-top-width: 10px;
   }
 
-  .up {
-    grid-row-start: 1;
-    grid-column-start: 2;
-    border-width: 5px 5px 0px 5px;
+  .cameraDisplay {
+    border-width: 10px;
   }
 
-  .right {
-    grid-row-start: 2;
-    grid-column-start: 1;
-    border-width: 5px 0px 5px 5px;
-  }
-
-  .down {
-    grid-row-start: 3;
-    grid-column-start: 2;
-    border-width: 0px 5px 5px 5px;
-  }
-
-  .left {
-    grid-row-start: 2;
-    grid-column-start: 3;
-    border-width: 5px 5px 5px 0px;
-  }
-
-  .center {
-    grid-row-start: 2;
-    grid-column-start: 2;
-    border-width: 0;
-  }
-}
-
-.inputPad {
-  grid-row-start: 4;
-  grid-column-start: 4;
-
-  input {
-    width: 93%;
-    height: 50px;
-    margin-top: 30px;
-    padding: 0 10px;
-    background-color: #E6E6E6;
-    font-family: 'Press Start 2P';
+  .pokemonName {
     font-size: 20px;
   }
-}
 
-.bottomModes {
-  grid-row-start: 5;
-  grid-column-start: 4;
-  display: grid;
-  grid-template-columns: 25% 25% 25% 25%;
-  grid-template-rows: 40% 20% 40%;
-}
-
-.blackButton {
-  background-color: #404040;
-  border: #303030 5px solid;
-  color: gray;
-  cursor: pointer;
-}
-
-.pokedexMode {
-  grid-row-start: 3;
-  grid-column-start: 1;
-  grid-column-end: 3;
-}
-
-.gameMode {
-  grid-row-start: 3;
-  grid-column-start: 3;
-  grid-column-end: 5;
-}
-
-.levelButton {
-  background-color: #1697F9;
-  border: #71CDF4 5px solid;
-  color: gray;
-  cursor: pointer;
+  .statsDisplay {
+    border-width: 3px;
+  }
 }
