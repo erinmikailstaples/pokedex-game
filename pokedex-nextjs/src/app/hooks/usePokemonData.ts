@@ -73,9 +73,9 @@ export function usePokemonData() {
 
   const handleTypeGuess = (guessedType: string) => {
     if (!pokemon || gameOver) return;
-
-    const correctType = pokemon.types[0].type.name;
-    if (guessedType === correctType) {
+  
+    const correctTypes = pokemon.types.map(type => type.type.name);
+    if (correctTypes.includes(guessedType)) {
       setScore(prevScore => prevScore + 1);
       fetchNewPokemon();
     } else {
