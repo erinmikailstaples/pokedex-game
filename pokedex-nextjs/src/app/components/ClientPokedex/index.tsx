@@ -1,14 +1,25 @@
+<<<<<<< HEAD
+=======
+'use client';
+
+import PokemonDisplay from '../PokemonDisplay';
+import QuizMode from '../QuizMode';
+import RandomMode from '../RandomMode';
+>>>>>>> parent of 4cf75df (update quiz to reflect types!)
 import { usePokemonData } from '@/app/hooks/usePokemonData';
 import { useState, useEffect } from 'react';
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/app/components/convex/_generated/api.js";
 
+<<<<<<< HEAD
 export default function ClientPokedex({ isQuizMode }) {
   const [showNamePrompt, setShowNamePrompt] = useState(false);
   const [playerName, setPlayerName] = useState('');
   const addScore = useMutation(api.addScore.default);
   const topScores = useQuery(api.getTopScores.default) || [];
   
+=======
+>>>>>>> parent of 4cf75df (update quiz to reflect types!)
 
   const {
     pokemon,
@@ -41,6 +52,7 @@ export default function ClientPokedex({ isQuizMode }) {
 
   return (
     <div>
+<<<<<<< HEAD
       {/* Existing game component */}
       {gameOver && (
         <div>
@@ -60,6 +72,27 @@ export default function ClientPokedex({ isQuizMode }) {
             <button onClick={resetGame}>Play Again</button>
           )}
         </div>
+=======
+      <PokemonDisplay
+        imageUrl={pokemon.sprites.front_default}
+        name={pokemon.name}
+        isQuizMode={isQuizMode}
+      />
+      {isQuizMode ? (
+        <QuizMode
+          score={score}
+          attempts={attempts}
+          gameOver={gameOver}
+          onGuess={handleTypeGuess}
+          onReset={resetGame}
+        />
+      ) : (
+        <RandomMode
+          name={pokemon.name}
+          types={pokemon.types}
+          onNewPokemon={fetchNewPokemon}
+        />
+>>>>>>> parent of 4cf75df (update quiz to reflect types!)
       )}
     </div>
   );
