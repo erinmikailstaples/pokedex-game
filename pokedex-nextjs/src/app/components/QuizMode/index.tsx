@@ -1,43 +1,48 @@
-// src/app/components/QuizMode/index.tsx
+'use client';
 
-import styles from '../PokemonDisplay.module.scss';
+import PokemonDisplay from '../PokemonDisplay';
+import QuizMode from '../QuizMode';
+import RandomMode from '../RandomMode';
+import { usePokemonData } from '@/app/hooks/usePokemonData';
 
-interface QuizModeProps {
-  score: number;
-  attempts: number;
-  gameOver: boolean;
-  onGuess: (type: string) => void;
-  onReset: () => void;
-}
+export default function ClientPokedex({ isQuizMode }) {
+  const {
+    pokemon,
+    isLoading,
+    error,
+    score,
+    attempts,
+    gameOver,
+    handleTypeGuess,
+    resetGame,
+    fetchNewPokemon
+  } = usePokemonData();
 
-const QUIZ_TYPES = ['fire', 'water', 'grass'];
-
-export default function QuizMode({ score, attempts, gameOver, onGuess, onReset }: QuizModeProps) {
-  const handleGuess = (type: string) => {
-    onGuess(type);
-    // The score update is now handled in the parent component (usePokemonData hook)
-  };
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!pokemon) return <div>No Pokemon data available</div>;
 
   return (
-    <div className={styles.quizMode}>
-      <h2>Guess the Pokemon Type!</h2>
-      <div className={styles.scoreBoard}>
-        <p>Score: {score}</p>
-        <p>Attempts left: {3 - attempts}</p>
-      </div>
-      {gameOver ? (
-        <div>
-          <p>Game Over! Your final score: {score}</p>
-          <button onClick={onReset}>Play Again</button>
-        </div>
+    <div>
+      <PokemonDisplay
+        imageUrl={pokemon.sprites.front_default}
+        name={pokemon.name}
+        isQuizMode={isQuizMode}
+      />
+      {isQuizMode ? (
+        <QuizMode
+          score={score}
+          attempts={attempts}
+          gameOver={gameOver}
+          onGuess={handleTypeGuess}
+          onReset={resetGame}
+        />
       ) : (
-        <div className={styles.typeButtons}>
-          {QUIZ_TYPES.map((type) => (
-            <button key={type} onClick={() => handleGuess(type)}>
-              {type.charAt(0).toUpperCase() + type.slice(1)}
-            </button>
-          ))}
-        </div>
+        <RandomMode
+          name={pokemon.name}
+          types={pokemon.types}
+          onNewPokemon={fetchNewPokemon}
+        />
       )}
     </div>
   );

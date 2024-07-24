@@ -38,7 +38,6 @@ export function usePokemonData() {
         setIsQuizMode(quizModeValue);
       } catch (error) {
         console.error('Error initializing LaunchDarkly:', error);
-        // Set a default value for isQuizMode if LaunchDarkly fails
         setIsQuizMode(false);
       }
     };
@@ -51,15 +50,19 @@ export function usePokemonData() {
   }, [isQuizMode]);
 
   const fetchNewPokemon = async () => {
+    const allowedTypes = ['grass', 'water', 'fire'];
     try {
       setIsLoading(true);
-      const randomId = Math.floor(Math.random() * 898) + 1;
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data: PokemonData = await response.json();
-      setPokemon(data);
+      let newPokemon: PokemonData;
+      do {
+        const randomId = Math.floor(Math.random() * 898) + 1;
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        newPokemon = await response.json();
+      } while (isQuizMode && !newPokemon.types.some(type => allowedTypes.includes(type.type.name)));
+      setPokemon(newPokemon);
     } catch (e) {
       console.error('Error fetching Pokemon:', e);
       setError('Failed to fetch Pokemon. Please try again.');
@@ -73,10 +76,10 @@ export function usePokemonData() {
 
     const correctType = pokemon.types[0].type.name;
     if (guessedType === correctType) {
-      setScore(score + 1);
+      setScore(prevScore => prevScore + 1);
       fetchNewPokemon();
     } else {
-      setAttempts(attempts + 1);
+      setAttempts(prevAttempts => prevAttempts + 1);
       if (attempts >= 2) {
         setGameOver(true);
       }
