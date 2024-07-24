@@ -1,27 +1,37 @@
-// src/app/components/ClientPokedex/index.tsx
+import { useState, useEffect } from 'react';
+import { useMutation, useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
-'use client';
+export default function ClientPokedex({ isQuizMode }) {
+  const [showNamePrompt, setShowNamePrompt] = useState(false);
+  const [playerName, setPlayerName] = useState('');
+  const addScore = useMutation(api.addScore);
+  const topScores = useQuery(api.getTopScores) || [];
 
-import PokemonDisplay from '../PokemonDisplay';
-import QuizMode from '../QuizMode';
-import RandomMode from '../RandomMode';
-import { usePokemonData } from '@/app/hooks/usePokemonData';
-
-const ALLOWED_TYPES = ['fire', 'water', 'grass'];
-
-export default function ClientPokedex() {
   const {
     pokemon,
     isLoading,
     error,
-    isQuizMode,
     score,
     attempts,
     gameOver,
-    fetchNewPokemon,
     handleTypeGuess,
     resetGame
   } = usePokemonData();
+
+  useEffect(() => {
+    if (gameOver) {
+      const isTopTen = topScores.length < 10 || score > topScores[topScores.length - 1].score;
+      setShowNamePrompt(isTopTen);
+    }
+  }, [gameOver, score, topScores]);
+
+  const handleNameSubmit = async (e) => {
+    e.preventDefault();
+    await addScore({ initials: playerName.slice(0, 3).toUpperCase(), score });
+    setShowNamePrompt(false);
+    resetGame();
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -29,26 +39,25 @@ export default function ClientPokedex() {
 
   return (
     <div>
-      <PokemonDisplay
-        imageUrl={pokemon.sprites.front_default}
-        name={pokemon.name}
-        isQuizMode={isQuizMode}
-      />
-      {isQuizMode ? (
-        <QuizMode
-          score={score}
-          attempts={attempts}
-          gameOver={gameOver}
-          onGuess={handleTypeGuess}
-          onReset={resetGame}
-          allowedTypes={ALLOWED_TYPES}
-        />
-      ) : (
-        <RandomMode
-          name={pokemon.name}
-          types={pokemon.types.filter(t => ALLOWED_TYPES.includes(t.type.name))}
-          onNewPokemon={fetchNewPokemon}
-        />
+      {/* Existing game component */}
+      {gameOver && (
+        <div>
+          <p>Game Over! Your final score: {score}</p>
+          {showNamePrompt ? (
+            <form onSubmit={handleNameSubmit}>
+              <input
+                type="text"
+                value={playerName}
+                onChange={(e) => setPlayerName(e.target.value)}
+                maxLength={3}
+                placeholder="Enter your initials"
+              />
+              <button type="submit">Submit Score</button>
+            </form>
+          ) : (
+            <button onClick={resetGame}>Play Again</button>
+          )}
+        </div>
       )}
     </div>
   );
