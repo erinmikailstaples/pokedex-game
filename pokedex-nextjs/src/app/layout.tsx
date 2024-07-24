@@ -6,6 +6,7 @@ const pressStart2P = Press_Start_2P({
   weight: '400',
   subsets: ['latin'],
   display: 'swap',
+  fallback: ['monospace', 'sans-serif'],
 });
 
 export const metadata: Metadata = {
