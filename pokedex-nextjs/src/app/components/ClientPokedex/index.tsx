@@ -1,3 +1,4 @@
+import { usePokemonData } from '@/app/hooks/usePokemonData';
 import { useState, useEffect } from 'react';
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/app/components/convex/_generated/api.js";
@@ -5,8 +6,9 @@ import { api } from "@/app/components/convex/_generated/api.js";
 export default function ClientPokedex({ isQuizMode }) {
   const [showNamePrompt, setShowNamePrompt] = useState(false);
   const [playerName, setPlayerName] = useState('');
-  const addScore = useMutation(api.addScore);
-  const topScores = useQuery(api.getTopScores) || [];
+  const addScore = useMutation(api.addScore.default);
+  const topScores = useQuery(api.getTopScores.default) || [];
+  
 
   const {
     pokemon,

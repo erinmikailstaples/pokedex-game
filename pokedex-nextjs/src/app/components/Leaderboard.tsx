@@ -4,8 +4,9 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "@/app/components/convex/_generated/api.js";
 
 export default function Leaderboard() {
-    const topScores = useQuery(api.getTopScores) || [];
-    const addScore = useMutation(api.addScore);
+    const topScores = useQuery(api.getTopScores.default) || [];
+    const addScore = useMutation(api.addScore.default);
+    
     
 
   const handleGameOver = async (initials: string, score: number) => {
