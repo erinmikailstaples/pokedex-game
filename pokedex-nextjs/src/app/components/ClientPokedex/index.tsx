@@ -1,5 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 4cf75df (update quiz to reflect types!)
 'use client';
 
 import PokemonDisplay from '../PokemonDisplay';
@@ -12,12 +15,15 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "@/app/components/convex/_generated/api.js";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 export default function ClientPokedex({ isQuizMode }) {
   const [showNamePrompt, setShowNamePrompt] = useState(false);
   const [playerName, setPlayerName] = useState('');
   const addScore = useMutation(api.addScore.default);
   const topScores = useQuery(api.getTopScores.default) || [];
   
+=======
+>>>>>>> parent of 4cf75df (update quiz to reflect types!)
 =======
 >>>>>>> parent of 4cf75df (update quiz to reflect types!)
 
