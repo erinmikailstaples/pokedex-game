@@ -1,11 +1,12 @@
 'use client';
 
-import { useQuery, useMutation } from "convex/react";
-import { api } from "@/convex/_generated/api";
+import { useQuery, useMutation, api } from "convex/react";
+
 
 export default function Leaderboard() {
-  const topScores = useQuery(api.getTopScores.default) || [];
-  const addScore = useMutation(api.addScore.default);
+    const topScores = useQuery(api.getTopScores) || [];
+    const addScore = useMutation(api.addScore);
+    
 
   const handleGameOver = async (initials: string, score: number) => {
     await addScore({ initials, score });
