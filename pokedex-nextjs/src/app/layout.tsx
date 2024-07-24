@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Inter, Press_Start_2P } from "next/font/google";
+import { Press_Start_2P } from 'next/font/google';
 import "./globals.scss";
 
-const inter = Inter({ subsets: ["latin"] });
 const pressStart2P = Press_Start_2P({
   weight: '400',
   subsets: ['latin'],
@@ -21,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} ${pressStart2P.variable}`}>
+      <body className={pressStart2P.className}>
         {children}
       </body>
     </html>
