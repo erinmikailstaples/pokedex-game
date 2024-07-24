@@ -1,23 +1,35 @@
-'use client';
+import styles from '../PokemonDisplay.module.scss';
 
-import dynamic from 'next/dynamic';
-import styles from '@/app/components/PokemonDisplay.module.scss';
-import { usePokemonData } from '@/app/hooks/usePokemonData';
+interface QuizModeProps {
+  score: number;
+  attempts: number;
+  gameOver: boolean;
+  onGuess: (type: string) => void;
+  onReset: () => void;
+}
 
-const ClientPokedex = dynamic(
-  () => import('@/app/components/ClientPokedex').then(mod => mod.default || mod),
-  {
-    ssr: false,
-    loading: () => <div>Loading...</div>,
-  }
-);
-
-export default function Home() {
-  const { isQuizMode } = usePokemonData();
+export default function QuizMode({ score, attempts, gameOver, onGuess, onReset }: QuizModeProps) {
+  const pokemonTypes = ['grass', 'water', 'fire'];
 
   return (
-    <main className={styles.main}>
-      <ClientPokedex isQuizMode={isQuizMode} />
-    </main>
+    <div className={styles.quizMode}>
+      <h2>Guess the Pokemon Type</h2>
+      <p>Score: {score}</p>
+      <p>Attempts left: {3 - attempts}</p>
+      {gameOver ? (
+        <div>
+          <p>Game Over! Your final score is {score}</p>
+          <button onClick={onReset}>Play Again</button>
+        </div>
+      ) : (
+        <div>
+          {pokemonTypes.map((type) => (
+            <button key={type} onClick={() => onGuess(type)}>
+              {type}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
