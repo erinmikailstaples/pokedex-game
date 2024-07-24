@@ -6,7 +6,7 @@ import RandomMode from '../RandomMode';
 import { usePokemonData } from '@/app/hooks/usePokemonData';
 import styles from '../PokemonDisplay.module.scss';
 
-export default function ClientPokedex({ isQuizMode }) {
+export default function ClientPokedex({ isQuizMode }: { isQuizMode: boolean }) {
   const {
     pokemon,
     isLoading,

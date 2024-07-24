@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { initialize, LDClient } from 'launchdarkly-js-client-sdk';
 
 interface PokemonData {
@@ -45,11 +45,7 @@ export function usePokemonData() {
     initLaunchDarkly();
   }, []);
 
-  useEffect(() => {
-    fetchNewPokemon();
-  }, [isQuizMode]);
-
-  const fetchNewPokemon = async () => {
+  const fetchNewPokemon = useCallback(async () => {
     const allowedTypes = ['grass', 'water', 'fire'];
     try {
       setIsLoading(true);
@@ -69,7 +65,11 @@ export function usePokemonData() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [isQuizMode]);
+
+  useEffect(() => {
+    fetchNewPokemon();
+  }, [isQuizMode, fetchNewPokemon]);
 
   const handleTypeGuess = (guessedType: string) => {
     if (!pokemon || gameOver) return;
