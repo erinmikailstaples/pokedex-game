@@ -1,49 +1,23 @@
 'use client';
 
-import PokemonDisplay from '../PokemonDisplay';
-import QuizMode from '../QuizMode';
-import RandomMode from '../RandomMode';
+import dynamic from 'next/dynamic';
+import styles from '@/app/components/PokemonDisplay.module.scss';
 import { usePokemonData } from '@/app/hooks/usePokemonData';
 
-export default function ClientPokedex({ isQuizMode }) {
-  const {
-    pokemon,
-    isLoading,
-    error,
-    score,
-    attempts,
-    gameOver,
-    handleTypeGuess,
-    resetGame,
-    fetchNewPokemon
-  } = usePokemonData();
+const ClientPokedex = dynamic(
+  () => import('@/app/components/ClientPokedex').then(mod => mod.default || mod),
+  {
+    ssr: false,
+    loading: () => <div>Loading...</div>,
+  }
+);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!pokemon) return <div>No Pokemon data available</div>;
+export default function Home() {
+  const { isQuizMode } = usePokemonData();
 
   return (
-    <div>
-      <PokemonDisplay
-        imageUrl={pokemon.sprites.front_default}
-        name={pokemon.name}
-        isQuizMode={isQuizMode}
-      />
-      {isQuizMode ? (
-        <QuizMode
-          score={score}
-          attempts={attempts}
-          gameOver={gameOver}
-          onGuess={handleTypeGuess}
-          onReset={resetGame}
-        />
-      ) : (
-        <RandomMode
-          name={pokemon.name}
-          types={pokemon.types}
-          onNewPokemon={fetchNewPokemon}
-        />
-      )}
-    </div>
+    <main className={styles.main}>
+      <ClientPokedex isQuizMode={isQuizMode} />
+    </main>
   );
 }
