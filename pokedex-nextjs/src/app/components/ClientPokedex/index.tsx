@@ -1,3 +1,5 @@
+// src/app/components/ClientPokedex/index.tsx
+
 'use client';
 
 import PokemonDisplay from '../PokemonDisplay';
@@ -5,6 +7,7 @@ import QuizMode from '../QuizMode';
 import RandomMode from '../RandomMode';
 import { usePokemonData } from '@/app/hooks/usePokemonData';
 
+const ALLOWED_TYPES = ['fire', 'water', 'grass'];
 
 export default function ClientPokedex() {
   const {
@@ -38,11 +41,12 @@ export default function ClientPokedex() {
           gameOver={gameOver}
           onGuess={handleTypeGuess}
           onReset={resetGame}
+          allowedTypes={ALLOWED_TYPES}
         />
       ) : (
         <RandomMode
           name={pokemon.name}
-          types={pokemon.types}
+          types={pokemon.types.filter(t => ALLOWED_TYPES.includes(t.type.name))}
           onNewPokemon={fetchNewPokemon}
         />
       )}

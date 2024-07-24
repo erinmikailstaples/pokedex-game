@@ -10,6 +10,8 @@ interface PokemonData {
   sprites: { front_default: string };
 }
 
+const ALLOWED_TYPES = ['fire', 'water', 'grass'];
+
 export function usePokemonData() {
   const [pokemon, setPokemon] = useState<PokemonData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -51,20 +53,24 @@ export function usePokemonData() {
   }, [isQuizMode]);
 
   const fetchNewPokemon = async () => {
-    try {
-      setIsLoading(true);
-      const randomId = Math.floor(Math.random() * 898) + 1;
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+    setIsLoading(true);
+    while (true) {
+      try {
+        const randomId = Math.floor(Math.random() * 898) + 1;
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data: PokemonData = await response.json();
+        if (ALLOWED_TYPES.includes(data.types[0].type.name)) {
+          setPokemon(data);
+          setIsLoading(false);
+          return;
+        }
+      } catch (e) {
+        console.error('Error fetching Pokemon:', e);
+        // Continue the loop to try again
       }
-      const data: PokemonData = await response.json();
-      setPokemon(data);
-    } catch (e) {
-      console.error('Error fetching Pokemon:', e);
-      setError('Failed to fetch Pokemon. Please try again.');
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -73,10 +79,10 @@ export function usePokemonData() {
 
     const correctType = pokemon.types[0].type.name;
     if (guessedType === correctType) {
-      setScore(score + 1);
+      setScore(prevScore => prevScore + 1);
       fetchNewPokemon();
     } else {
-      setAttempts(attempts + 1);
+      setAttempts(prevAttempts => prevAttempts + 1);
       if (attempts >= 2) {
         setGameOver(true);
       }
@@ -103,3 +109,4 @@ export function usePokemonData() {
     resetGame
   };
 }
+
