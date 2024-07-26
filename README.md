@@ -1,6 +1,10 @@
 # Pokedex Game
 
-A dynamic Pokedex application built with Next.js and LaunchDarkly feature flags.
+A dynamic Pokedex application built with Next.js, Typescript, and LaunchDarkly feature flags.
+
+Deployed on Vercel.
+
+Read the tutorial on how to build this app yourself: https://launchdarkly.com/blog/build-a-pokedex-game-with-nextjs-vercel-launchdarkly-pokeapi/
 
 ## Installation
 
@@ -11,24 +15,19 @@ git clone https://github.com/erinmikailstaples/pokedex-game.git
 
 2. Navigate to the project directory:
 
-
-
 cd pokedex-game
 
 
 3. Install dependencies:
-
 
 npm install
 
 4. Set up your LaunchDarkly SDK key in a `.env.local` file:
 
 
-
 NEXT_PUBLIC_LD_CLIENT_SIDE_SDK=your-client-side-sdk-key
 
 5. Run the development server:
-
 
 npm run dev
 
