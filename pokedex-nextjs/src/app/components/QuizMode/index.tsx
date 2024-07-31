@@ -4,7 +4,7 @@ import PokemonDisplay from '../PokemonDisplay';
 import styles from '../PokemonDisplay.module.scss';
 import { usePokemonData } from '@/app/hooks/usePokemonData';
 import { useMutation } from "convex/react";
-import { api } from "../../convex/_generated/api";
+import { api } from "../../../../convex/_generated/api";
 import { useState } from 'react';
 
 export default function QuizMode() {
