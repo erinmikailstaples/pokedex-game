@@ -45,21 +45,31 @@ export default function QuizMode() {
         name={pokemon.name}
         isQuizMode={true}
       />
-      {gameOver ? (
-        <div>
-          <p>Game Over! Your score: {score}</p>
-          <button onClick={resetGame}>Play Again</button>
-          {submitStatus === 'success' && <p>High score submitted successfully!</p>}
-          {submitStatus === 'error' && <p>Error submitting high score. Please try again.</p>}
-          {/* Add form for submitting high score */}
-        </div>
-      ) : (
-        <div>
-          <p>Guess the Pokemon type:</p>
-          {/* Add type buttons for guessing */}
-          {/* Use handleTypeGuess function for button click handlers */}
-        </div>
-      )}
+{gameOver ? (
+  <div>
+    <p>Game Over! Your score: {score}</p>
+    <button onClick={resetGame}>Play Again</button>
+    {submitStatus === 'success' && <p>High score submitted successfully!</p>}
+    {submitStatus === 'error' && <p>Error submitting high score. Please try again.</p>}
+    <form onSubmit={(e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target as HTMLFormElement);
+      handleSubmitScore(formData.get('initials') as string, formData.get('email') as string);
+    }}>
+      <input type="text" name="initials" maxLength={3} placeholder="Initials" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <button type="submit">Submit High Score</button>
+    </form>
+  </div>
+) : (
+  <div>
+    <p>Guess the Pokemon type:</p>
+    {['Normal', 'Fire', 'Water', 'Electric', 'Grass', 'Ice', 'Fighting', 'Poison', 'Ground'].map(type => (
+      <button key={type} type="button" onClick={() => handleTypeGuess(type)}>{type}</button>
+    ))}
+  </div>
+)}
+
     </div>
   );
 }
