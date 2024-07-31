@@ -6,7 +6,7 @@ import RandomMode from '../RandomMode';
 import { usePokemonData } from '@/app/hooks/usePokemonData';
 import styles from '../PokemonDisplay.module.scss';
 import { useMutation, useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
+import { api } from "../../../convex/_generated/api";
 
 export default function ClientPokedex({ isQuizMode }: { isQuizMode: boolean }) {
   const {
