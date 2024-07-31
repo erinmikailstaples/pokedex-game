@@ -12,21 +12,20 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <ClientPokedex isQuizMode={isQuizMode} />
-      {isQuizMode && (
-        <div>
-          <h3>High Scores</h3>
-          {highScores === undefined ? (
-            <p>Loading high scores...</p>
-          ) : (
-            highScores.map((highScore, index) => (
-              <div key={index}>
-                {highScore.initials}: {highScore.score}
-              </div>
-            ))
-          )}
-        </div>
-      )}
+      <ClientPokedex />
+      <div>
+        <h3>High Scores</h3>
+        {highScores === undefined ? (
+          <p>Loading high scores...</p>
+        ) : highScores.length === 0 ? (
+          <p>No high scores yet</p>
+        ) : (
+          highScores.map((highScore, index) => (
+            <div key={index}>
+              {highScore.initials}: {highScore.score}
+            </div>
+          ))
+        )}
+      </div>
     </main>
   );
-}

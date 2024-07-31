@@ -43,7 +43,6 @@ export default function QuizMode() {
       <PokemonDisplay
         imageUrl={pokemon.sprites.front_default}
         name={pokemon.name}
-        isQuizMode={true}
       />
 {gameOver ? (
   <div>
