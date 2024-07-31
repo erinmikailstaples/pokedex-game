@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useMutation } from "convex/react";
-import { api } from "../../../convex/_generated/api";
+import { api } from "../convex/_generated/api";
 import { initialize, LDClient } from 'launchdarkly-js-client-sdk';
 
 interface PokemonData {

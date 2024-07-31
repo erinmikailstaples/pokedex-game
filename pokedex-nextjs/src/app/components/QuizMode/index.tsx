@@ -6,7 +6,7 @@ import RandomMode from '../RandomMode';
 import { usePokemonData } from '@/app/hooks/usePokemonData';
 import styles from '../PokemonDisplay.module.scss';
 import { useMutation } from "convex/react";
-import { api } from "../../../../convex/_generated/api";
+import { api } from "../../convex/_generated/api";
 import { useState } from 'react';
 
 
@@ -49,14 +49,7 @@ export default function ClientPokedex({ isQuizMode }: { isQuizMode: boolean }) {
         isQuizMode={isQuizMode}
       />
       {isQuizMode ? (
-        <QuizMode
-          score2={score}
-          attempts={attempts}
-          gameOver={gameOver}
-          onGuess={handleTypeGuess}
-          onReset={resetGame}
-          onSubmitScore={handleSubmitScore}
-        />
+        <QuizMode />
       ) : (
         <RandomMode
           name={pokemon.name}
