@@ -1,3 +1,4 @@
+'use client';
 import type { Metadata } from "next";
 import { Press_Start_2P } from 'next/font/google';
 import "./globals.scss";
