@@ -5,8 +5,8 @@ export default function Pokedex() {
   return (
     <div className={styles.pokedex}>
       <div id="pokedex">
-        <div className="sensor">
-          <button></button>
+        <div onClick={() => {console.log("clicked")
+        }} className="sensor">
         </div>
         <div className="camera-display">
           <Image 

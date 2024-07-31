@@ -6,8 +6,9 @@ import RandomMode from '../RandomMode';
 import { usePokemonData } from '@/app/hooks/usePokemonData';
 import styles from '../PokemonDisplay.module.scss';
 import { useMutation } from "convex/react";
-import { api } from "@/convex/_generated/api";
+import { api } from "../../../../convex/_generated/api";
 import { useState } from 'react';
+
 
 export default function ClientPokedex({ isQuizMode }: { isQuizMode: boolean }) {
   const {
@@ -23,7 +24,7 @@ export default function ClientPokedex({ isQuizMode }: { isQuizMode: boolean }) {
     submitHighScore
   } = usePokemonData();
 
-  const addHighScore = useMutation(api.addHighScore);
+  const addHighScore = useMutation(api.addHighScore.addHighScore);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleSubmitScore = async (initials: string, email: string) => {
@@ -49,7 +50,7 @@ export default function ClientPokedex({ isQuizMode }: { isQuizMode: boolean }) {
       />
       {isQuizMode ? (
         <QuizMode
-          score={score}
+          score2={score}
           attempts={attempts}
           gameOver={gameOver}
           onGuess={handleTypeGuess}
