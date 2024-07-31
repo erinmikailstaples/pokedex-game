@@ -39,16 +39,15 @@ export default function ClientPokedex({ isQuizMode }: { isQuizMode: boolean }) {
         name={pokemon.name}
         isQuizMode={isQuizMode}
       />
-      {isQuizMode ? (
-        <QuizMode isQuizMode={isQuizMode}
-        />
-      ) : (
-        <RandomMode
-          name={pokemon.name}
-          types={pokemon.types}
-          onNewPokemon={fetchNewPokemon}
-        />
-      )}
+    {isQuizMode ? (
+      <QuizMode />
+    ) : (
+      <RandomMode
+        name={pokemon.name}
+        types={pokemon.types}
+        onNewPokemon={fetchNewPokemon}
+      />
+    )}
       {isQuizMode && gameOver && (
         <div>
           <h2>Game Over! Your score: {score}</h2>

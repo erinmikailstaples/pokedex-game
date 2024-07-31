@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Press_Start_2P } from 'next/font/google';
 import "./globals.scss";
-import ConvexClientProvider from '@/app/Convex.Client.Provider';
+import { ConvexClientProvider } from "./Convex.Client.Provider";
 
 const pressStart2P = Press_Start_2P({
   weight: '400',
@@ -23,9 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ConvexClientProvider>
-        <body className={pressStart2P.className}>
-          {children}
-        </body>
+        <body className={pressStart2P.className}>{children}</body>
       </ConvexClientProvider>
     </html>
   );

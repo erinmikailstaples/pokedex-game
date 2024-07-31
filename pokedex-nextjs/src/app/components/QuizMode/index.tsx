@@ -1,16 +1,13 @@
 'use client';
 
 import PokemonDisplay from '../PokemonDisplay';
-import QuizMode from '../QuizMode';
-import RandomMode from '../RandomMode';
-import { usePokemonData } from '@/app/hooks/usePokemonData';
 import styles from '../PokemonDisplay.module.scss';
+import { usePokemonData } from '@/app/hooks/usePokemonData';
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { useState } from 'react';
 
-
-export default function ClientPokedex({ isQuizMode }: { isQuizMode: boolean }) {
+export default function QuizMode() {
   const {
     pokemon,
     isLoading,
@@ -46,21 +43,21 @@ export default function ClientPokedex({ isQuizMode }: { isQuizMode: boolean }) {
       <PokemonDisplay
         imageUrl={pokemon.sprites.front_default}
         name={pokemon.name}
-        isQuizMode={isQuizMode}
+        isQuizMode={true}
       />
-      {isQuizMode ? (
-        <QuizMode />
-      ) : (
-        <RandomMode
-          name={pokemon.name}
-          types={pokemon.types}
-          onNewPokemon={fetchNewPokemon}
-        />
-      )}
-      {isQuizMode && gameOver && (
+      {gameOver ? (
         <div>
+          <p>Game Over! Your score: {score}</p>
+          <button onClick={resetGame}>Play Again</button>
           {submitStatus === 'success' && <p>High score submitted successfully!</p>}
           {submitStatus === 'error' && <p>Error submitting high score. Please try again.</p>}
+          {/* Add form for submitting high score */}
+        </div>
+      ) : (
+        <div>
+          <p>Guess the Pokemon type:</p>
+          {/* Add type buttons for guessing */}
+          {/* Use handleTypeGuess function for button click handlers */}
         </div>
       )}
     </div>
