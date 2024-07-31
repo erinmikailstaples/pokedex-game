@@ -20,6 +20,6 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": ["./**/*"],
+  "include": ["./**/*", "../../../convex/addHighScore.ts", "../../../convex/getHighScores.ts", "../../../convex/schema.ts"],
   "exclude": ["./_generated"]
 }
