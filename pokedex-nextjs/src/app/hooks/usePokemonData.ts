@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import { initialize, LDClient } from 'launchdarkly-js-client-sdk';
 
 interface PokemonData {
@@ -19,6 +21,8 @@ export function usePokemonData() {
   const [score, setScore] = useState(0);
   const [attempts, setAttempts] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+
+  const addHighScore = useMutation(api.addHighScore);
 
   useEffect(() => {
     const initLaunchDarkly = async () => {
@@ -93,6 +97,10 @@ export function usePokemonData() {
     fetchNewPokemon();
   };
 
+  const submitHighScore = async (initials: string, email: string) => {
+    await addHighScore({ initials, email, score });
+  };
+
   return {
     pokemon,
     isLoading,
@@ -103,6 +111,7 @@ export function usePokemonData() {
     gameOver,
     fetchNewPokemon,
     handleTypeGuess,
-    resetGame
+    resetGame,
+    submitHighScore
   };
 }

@@ -7,6 +7,7 @@ import { usePokemonData } from '@/app/hooks/usePokemonData';
 import styles from '../PokemonDisplay.module.scss';
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { useState } from 'react';
 
 export default function ClientPokedex({ isQuizMode }: { isQuizMode: boolean }) {
   const {
@@ -18,14 +19,22 @@ export default function ClientPokedex({ isQuizMode }: { isQuizMode: boolean }) {
     gameOver,
     handleTypeGuess,
     resetGame,
-    fetchNewPokemon
+    fetchNewPokemon,
+    submitHighScore
   } = usePokemonData();
 
   const addHighScore = useMutation(api.addHighScore);
   const highScores = useQuery(api.getHighScores);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleSubmitScore = (initials: string, email: string) => {
-    addHighScore({ initials, email, score });
+  const handleSubmitScore = async (initials: string, email: string) => {
+    try {
+      await submitHighScore(initials, email);
+      setSubmitStatus('success');
+    } catch (error) {
+      console.error('Error submitting score:', error);
+      setSubmitStatus('error');
+    }
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -58,11 +67,17 @@ export default function ClientPokedex({ isQuizMode }: { isQuizMode: boolean }) {
       {isQuizMode && gameOver && (
         <div>
           <h3>High Scores</h3>
-          {highScores?.map((highScore, index) => (
-            <div key={index}>
-              {highScore.initials}: {highScore.score}
-            </div>
-          ))}
+          {highScores === undefined ? (
+            <p>Loading high scores...</p>
+          ) : (
+            highScores.map((highScore, index) => (
+              <div key={index}>
+                {highScore.initials}: {highScore.score}
+              </div>
+            ))
+          )}
+          {submitStatus === 'success' && <p>High score submitted successfully!</p>}
+          {submitStatus === 'error' && <p>Error submitting high score. Please try again.</p>}
         </div>
       )}
     </div>
