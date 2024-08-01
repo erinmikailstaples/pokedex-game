@@ -1,48 +1,44 @@
 .typeButtons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-  }
-  
-  .typeButton {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
-    transition: transform 0.1s;
-  
-    &:hover {
-      transform: scale(1.05);
-    }
-  
-    &:active {
-      transform: scale(0.95);
-    }
-  }
-  
-// type buttons for each
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 0 15px;
+}
 
-  .typeButton[data-type="Normal"] { background-color: #A8A878; }
-  .typeButton[data-type="Fire"] { background-color: #F08030; }
-  .typeButton[data-type="Water"] { background-color: #6890F0; }
-  .typeButton[data-type="Electric"] { background-color: #F8D030; }
-  .typeButton[data-type="Grass"] { background-color: #78C850; }
-  .typeButton[data-type="Ice"] { background-color: #98D8D8; }
-  .typeButton[data-type="Fighting"] { background-color: #C03028; }
-  .typeButton[data-type="Poison"] { background-color: #A040A0; }
-  .typeButton[data-type="Ground"] { background-color: #E0C068; }
-  .typeButton[data-type="Flying"] { background-color: #A890F0; }
-  .typeButton[data-type="Psychic"] { background-color: #F85888; }
-  .typeButton[data-type="Bug"] { background-color: #A8B820; }
-  .typeButton[data-type="Rock"] { background-color: #B8A038; }
-  .typeButton[data-type="Ghost"] { background-color: #705898; }
-  .typeButton[data-type="Dragon"] { background-color: #7038F8; }
-  .typeButton[data-type="Dark"] { background-color: #705848; }
-  .typeButton[data-type="Steel"] { background-color: #B8B8D0; }
-  .typeButton[data-type="Fairy"] { background-color: #EE99AC; }
-  
+.typeButton {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(8px, 2vw, 12px);
+  color: #ffffff;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.typeButton[data-type="Normal"] { background-color: #A8A878; }
+.typeButton[data-type="Fire"] { background-color: #F08030; }
+.typeButton[data-type="Water"] { background-color: #6890F0; }
+.typeButton[data-type="Electric"] { background-color: #F8D030; }
+.typeButton[data-type="Grass"] { background-color: #78C850; }
+.typeButton[data-type="Ice"] { background-color: #98D8D8; }
+.typeButton[data-type="Fighting"] { background-color: #C03028; }
+.typeButton[data-type="Poison"] { background-color: #A040A0; }
+.typeButton[data-type="Ground"] { background-color: #E0C068; }

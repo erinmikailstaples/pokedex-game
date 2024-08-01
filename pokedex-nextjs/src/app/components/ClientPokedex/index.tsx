@@ -4,6 +4,8 @@ import PokemonDisplay from '../PokemonDisplay';
 import TypeButtons from '../TypeButtons';
 import { usePokemonData } from '@/app/hooks/usePokemonData';
 import styles from '../PokemonDisplay.module.scss';
+import { useQuery } from 'convex/react';
+import { api } from "../../../../convex/_generated/api";
 
 export default function ClientPokedex() {
   const {
@@ -16,6 +18,10 @@ export default function ClientPokedex() {
     gameOver,
     resetGame
   } = usePokemonData();
+
+  const highScores = useQuery(api.getHighScores.getHighScores);
+  const topScore = highScores && highScores.length > 0 ? highScores[0].score : 0;
+  const scoreDistance = Math.max(0, topScore - score);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -33,6 +39,7 @@ export default function ClientPokedex() {
           <div className={styles.scorePanel}>
             <p>Score: {score}</p>
             <p>Attempts left: {3 - attempts}</p>
+            <p>Points to high score: {scoreDistance}</p>
           </div>
         </>
       ) : (
