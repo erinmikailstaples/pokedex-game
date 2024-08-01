@@ -16,7 +16,9 @@ export default function PokemonDisplay({ imageUrl, name }: PokemonDisplayProps) 
         height={300}
         unoptimized={true}
       />
-      <h2 className={styles.pokemonName}>{name}</h2>
+      <div className={styles.namePopup}>
+        <p>{name}</p>
+      </div>
     </div>
   );
 }

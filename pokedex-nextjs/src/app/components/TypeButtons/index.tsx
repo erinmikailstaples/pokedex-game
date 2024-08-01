@@ -1,6 +1,5 @@
 import styles from '../TypeButtons.module.scss';
 
-
 const types = ['Normal', 'Fire', 'Water', 'Electric', 'Grass', 'Ice', 'Fighting', 'Poison', 'Ground'];
 
 interface TypeButtonsProps {
@@ -14,6 +13,7 @@ export default function TypeButtons({ onTypeGuess }: TypeButtonsProps) {
         <button 
           key={type} 
           className={styles.typeButton} 
+          data-type={type}
           onClick={() => onTypeGuess(type)}
         >
           {type}
