@@ -190,3 +190,48 @@
     word-wrap: break-word;
   }
 }
+
+.typeButtons {
+  image-rendering: pixelated;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 0 15px;
+}
+
+.typeButton {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(8px, 2vw, 12px);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  &:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+}
+
+.typeButton[data-type="Normal"] { background-color: #A8A878; color: #000000; }
+.typeButton[data-type="Fire"] { background-color: #F08030; color: #000000; }
+.typeButton[data-type="Water"] { background-color: #6890F0; color: #FFFFFF; }
+.typeButton[data-type="Electric"] { background-color: #F8D030; color: #000000; }
+.typeButton[data-type="Grass"] { background-color: #78C850; color: #000000; }
+.typeButton[data-type="Ice"] { background-color: #98D8D8; color: #000000; }
+.typeButton[data-type="Fighting"] { background-color: #C03028; color: #FFFFFF; }
+.typeButton[data-type="Poison"] { background-color: #A040A0; color: #FFFFFF; }
+.typeButton[data-type="Ground"] { background-color: #E0C068; color: #000000; }
