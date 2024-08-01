@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <ClientPokedex />
-      <div>
+      <div className={styles.highScoresPanel}>
         <h3>High Scores</h3>
         {highScores === undefined ? (
           <p>Loading high scores...</p>
@@ -28,4 +28,5 @@ export default function Home() {
         )}
       </div>
     </main>
-  );}
+  );
+}

@@ -133,3 +133,26 @@
     padding: 8px 16px;
   }
 }
+
+.highScoresPanel {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: black;
+  color: #00ff00;
+  padding: 15px;
+  border-radius: 10px;
+  font-family: 'Press Start 2P', cursive;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+
+  h3 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+  }
+
+  div {
+    margin-bottom: 5px;
+  }
+}
+
