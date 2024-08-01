@@ -10,8 +10,11 @@ export default function ClientPokedex() {
     pokemon,
     isLoading,
     error,
+    score,
+    attempts,
     handleTypeGuess,
-    fetchNewPokemon
+    gameOver,
+    resetGame
   } = usePokemonData();
 
   if (isLoading) return <div>Loading...</div>;
@@ -24,8 +27,20 @@ export default function ClientPokedex() {
         imageUrl={pokemon.sprites.front_default}
         name={pokemon.name}
       />
-      <TypeButtons onTypeGuess={handleTypeGuess} />
-      <button onClick={fetchNewPokemon}>Get New Pokemon</button>
+      {!gameOver ? (
+        <>
+          <TypeButtons onTypeGuess={handleTypeGuess} />
+          <div className={styles.scorePanel}>
+            <p>Score: {score}</p>
+            <p>Attempts left: {3 - attempts}</p>
+          </div>
+        </>
+      ) : (
+        <div>
+          <p>Game Over! Final Score: {score}</p>
+          <button onClick={resetGame}>Play Again</button>
+        </div>
+      )}
     </div>
   );
 }

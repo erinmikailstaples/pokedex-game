@@ -27,7 +27,6 @@ export function usePokemonData() {
   useEffect(() => {
     const initLaunchDarkly = async () => {
       const clientSideId = process.env.NEXT_PUBLIC_LD_CLIENT_SIDE_SDK;
-      console.log('LaunchDarkly Client Side ID:', clientSideId);
       if (!clientSideId) {
         console.error('LaunchDarkly client-side ID is not set');
         return;
@@ -35,10 +34,8 @@ export function usePokemonData() {
       try {
         const client = initialize(clientSideId, { anonymous: true });
         await client.waitForInitialization();
-        console.log('LaunchDarkly client initialized successfully');
         setLdClient(client);
         const quizModeValue = client.variation('quiz-mode', false);
-        console.log('Quiz mode value:', quizModeValue);
         setIsQuizMode(quizModeValue);
       } catch (error) {
         console.error('Error initializing LaunchDarkly:', error);
@@ -79,14 +76,17 @@ export function usePokemonData() {
     if (!pokemon || gameOver) return;
   
     const correctTypes = pokemon.types.map(type => type.type.name);
-    if (correctTypes.includes(guessedType)) {
+    if (correctTypes.includes(guessedType.toLowerCase())) {
       setScore(prevScore => prevScore + 1);
       fetchNewPokemon();
     } else {
-      setAttempts(prevAttempts => prevAttempts + 1);
-      if (attempts >= 2) {
-        setGameOver(true);
-      }
+      setAttempts(prevAttempts => {
+        const newAttempts = prevAttempts + 1;
+        if (newAttempts >= 3) {
+          setGameOver(true);
+        }
+        return newAttempts;
+      });
     }
   };
 

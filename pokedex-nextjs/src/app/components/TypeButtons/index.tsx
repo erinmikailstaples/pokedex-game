@@ -1,4 +1,4 @@
-import styles from './TypeButtons.module.scss';
+import styles from '../TypeButtons.module.scss';
 
 
 const types = ['Normal', 'Fire', 'Water', 'Electric', 'Grass', 'Ice', 'Fighting', 'Poison', 'Ground'];
