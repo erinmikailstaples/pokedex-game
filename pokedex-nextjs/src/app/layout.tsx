@@ -13,6 +13,9 @@ const pressStart2P = Press_Start_2P({
 export const metadata: Metadata = {
   title: "Pokedex App",
   description: "A Next.js Pokedex application",
+  icons: {
+    icon: '/pokeball.ico',
+  },
 };
 
 export default function RootLayout({
