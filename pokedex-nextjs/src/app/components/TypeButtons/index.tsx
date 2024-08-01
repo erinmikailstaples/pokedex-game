@@ -1,6 +1,10 @@
 import styles from '../PokemonDisplay.module.scss';
 
-const types = ['Normal', 'Fire', 'Water', 'Electric', 'Grass', 'Ice', 'Fighting', 'Poison', 'Ground'];
+const types = [
+  'Normal', 'Fire', 'Water', 'Electric', 'Grass', 'Ice',
+  'Fighting', 'Poison', 'Ground', 'Flying', 'Psychic', 'Bug',
+  'Rock', 'Ghost', 'Dragon', 'Dark', 'Steel', 'Fairy'
+];
 
 interface TypeButtonsProps {
   onTypeGuess: (type: string) => void;
